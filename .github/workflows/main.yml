@@ -24,5 +24,7 @@ jobs:
         pip install -r requirements/test_requirements.txt
     - name: train_pipeline
       run: |
-        pytest
-      
+        python titanic_model/train_pipeline.py
+    - name: test_pipeline
+      run: |
+        pytest test/test_*.py
