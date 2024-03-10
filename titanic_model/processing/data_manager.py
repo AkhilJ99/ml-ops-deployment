@@ -19,16 +19,16 @@ from titanic_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 # 1. Extracts the title (Mr, Ms, etc) from the name variable
 def get_title(passenger:str) -> str:
     line = passenger
-    if re.search('Mrs', line):
-        return 'Mrs'
-    elif re.search('Mr', line):
-        return 'Mr'
-    elif re.search('Miss', line):
-        return 'Miss'
-    elif re.search('Master', line):
-        return 'Master'
+    if re.search('mrs', line):
+        return 'mrs'
+    elif re.search('mr', line):
+        return 'mr'
+    elif re.search('miss', line):
+        return 'miss'
+    elif re.search('master', line):
+        return 'master'
     else:
-        return 'Other'
+        return 'other'
     
 # 2. processing cabin
 
@@ -58,7 +58,6 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     transformed = pre_pipeline_preparation(data_frame=dataframe)
 
     return transformed
-
 
 def save_pipeline(*, pipeline_to_persist: Pipeline) -> None:
     """Persist the pipeline.
@@ -95,3 +94,66 @@ def remove_old_pipelines(*, files_to_keep: t.List[str]) -> None:
     for model_file in TRAINED_MODEL_DIR.iterdir():
         if model_file.name not in do_not_delete:
             model_file.unlink()
+
+def sex_encoder(sex:str) -> int:
+    if re.search('M', sex):
+        return 1
+    elif re.search('F', sex):
+        return 2
+    else:
+        assert 1 == 2
+
+def bp_chol_encoder(bp:str) -> int:
+    if re.search('HIGH', bp):
+        return 3
+    elif re.search('NORMAL',bp):
+        return 2
+    elif re.search('LOW', bp):
+        return 1
+    else:
+        assert 1==2
+
+def drug_encoder(drug:str) -> int:
+    if re.search('drugA',drug):
+        return 1
+    elif re.search('drugB',drug):
+        return 2
+    elif re.search('drugC',drug):
+        return 3
+    elif re.search('drugX',drug):
+        return 4
+    elif re.search('drugY',drug):
+        return 5
+    else:
+        assert 1==2
+
+def drug_reverse(drug:int) -> str:
+    if drug == 1:
+        return 'drugA'
+    elif drug == 2:
+        return 'drugB'
+    elif drug == 3:
+        return 'drugC'
+    elif drug == 4:
+        return 'drugX'
+    elif drug == 5:
+        return 'drugY'
+    else:
+        assert 1==2
+
+def drug_pre_pipeline_preparation(*, data_frame: pd.DataFrame) -> pd.DataFrame:
+
+    data_frame["Sex"] = data_frame["Sex"].apply(sex_encoder)       # Fetching title
+    data_frame['BP'] = data_frame['BP'].apply(bp_chol_encoder)
+    data_frame['Cholesterol'] = data_frame['Cholesterol'].apply(bp_chol_encoder)
+    if data_frame.columns.isin(['Drug']).any():
+        data_frame['Drug'] = data_frame['Drug'].apply(drug_encoder)
+
+    return data_frame
+
+
+def load_drug_dataset(*, file_name: str) -> pd.DataFrame:
+    dataframe = pd.read_csv(Path(file_name))
+    transformed = drug_pre_pipeline_preparation(data_frame=dataframe)
+    return transformed
+

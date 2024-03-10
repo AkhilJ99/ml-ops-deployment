@@ -19,17 +19,11 @@ class MultipleDataInputs(BaseModel):
             "example": {
                 "inputs": [
                     {
-                        "PassengerId": 79,
-                        "Pclass": 2,
-                        "Name": "Caldwell, Master. Alden Gates",
-                        "Sex": "male",
-                        "Age": 0.83,
-                        "SibSp": 0,
-                        "Parch": 2,
-                        "Ticket": "248738",
-                        "Cabin": 'A5',
-                        "Embarked": "S",
-                        "Fare": 29,
+                        "Age": 79,
+                        "Sex": "M",
+                        "BP": "HIGH",
+                        "Cholesterol": "NORMAL",
+                        "Na_to_K": 11.037,
                     }
                 ]
             }

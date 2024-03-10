@@ -11,23 +11,15 @@ import pandas as pd
 from pydantic import BaseModel, ValidationError
 
 from titanic_model.config.core import config
-from titanic_model.processing.data_manager import pre_pipeline_preparation
+from titanic_model.processing.data_manager import drug_pre_pipeline_preparation
 
 
 def validate_inputs(*, input_df: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[dict]]:
     """Check model inputs for unprocessable values."""
 
-    pre_processed = pre_pipeline_preparation(data_frame=input_df)
-    validated_data = pre_processed[config.model_config.features].copy()
+    pre_processed = drug_pre_pipeline_preparation(data_frame=input_df)
+    validated_data = pre_processed.copy()
     errors = None
-
-    try:
-        # replace numpy nans so that pydantic can validate
-        MultipleDataInputs(
-            inputs=validated_data.replace({np.nan: None}).to_dict(orient="records")
-        )
-    except ValidationError as error:
-        errors = error.json()
 
     return validated_data, errors
 

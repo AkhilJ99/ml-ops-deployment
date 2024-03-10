@@ -12,6 +12,8 @@ from titanic_model.config.core import config
 from titanic_model.processing.features import embarkImputer
 from titanic_model.processing.features import Mapper
 from titanic_model.processing.features import age_col_tfr
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.neighbors import KNeighborsClassifier
 
 titanic_pipe=Pipeline([
     
@@ -32,4 +34,11 @@ titanic_pipe=Pipeline([
      ('model_rf', RandomForestClassifier(n_estimators=config.model_config.n_estimators, max_depth=config.model_config.max_depth,
                                       random_state=config.model_config.random_state))
           
+     ])
+
+
+drugs_pipe=Pipeline([
+	('scaler', StandardScaler()),
+	('selector', VarianceThreshold()),
+	('classifier', KNeighborsClassifier())
      ])
