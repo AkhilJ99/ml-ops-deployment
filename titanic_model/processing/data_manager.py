@@ -142,7 +142,6 @@ def drug_reverse(drug:int) -> str:
         assert 1==2
 
 def drug_pre_pipeline_preparation(*, data_frame: pd.DataFrame) -> pd.DataFrame:
-
     data_frame["Sex"] = data_frame["Sex"].apply(sex_encoder)       # Fetching title
     data_frame['BP'] = data_frame['BP'].apply(bp_chol_encoder)
     data_frame['Cholesterol'] = data_frame['Cholesterol'].apply(bp_chol_encoder)

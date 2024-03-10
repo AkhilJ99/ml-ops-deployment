@@ -25,18 +25,11 @@ def validate_inputs(*, input_df: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[d
 
 
 class DataInputSchema(BaseModel):
-    PassengerId:Optional[int]
-    Pclass: Optional[int]
-    Name: Optional[str]
+    Age:Optional[float]
     Sex: Optional[str]
-    Age: Optional[float]
-    SibSp: Optional[int]
-    Parch: Optional[int]
-    Ticket: Optional[str]
-    Fare: Optional[float]
-    Cabin: Optional[Union[str, float]]
-    Embarked: Optional[str]
-    #Fare: Optional[int]
+    BP: Optional[str]
+    Cholesterol: Optional[str]
+    Na_to_K: Optional[float]
 
 
 class MultipleDataInputs(BaseModel):
