@@ -38,11 +38,13 @@ async def predict(input_data: schemas.MultipleDataInputs) -> Any:
     Survival predictions with the titanic_model
     """
 
+    print("before json encoder")
     input_df = pd.DataFrame(jsonable_encoder(input_data.inputs))
     
     results = make_prediction(input_data=input_df.replace({np.nan: None}))
+    print("prediction done")
 
-    if results["errors"] is not None:
+    if results["errors"] is no None:
         raise HTTPException(status_code=400, detail=json.loads(results["errors"]))
 
     return results

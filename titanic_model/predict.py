@@ -23,11 +23,12 @@ drugs_pipe= load_pipeline(file_name=drug_file_name)
 def make_prediction(*,input_data:Union[pd.DataFrame, dict]) -> dict:
     """Make a prediction using a saved model """
 
+    print("validating data")
     validated_data, errors = validate_inputs(input_df=pd.DataFrame(input_data))
     
     #validated_data=validated_data.reindex(columns=['Pclass','Sex','Age','Fare', 'Embarked','FamilySize','Has_cabin','Title'])
     #validated_data=validated_data.reindex(columns=config.model_config.features)
-    #print(validated_data)
+    print("validated data", validated_data)
     results = {"predictions": None, "version": _version, "errors": errors}
     
     predictions = drugs_pipe.predict(validated_data)
