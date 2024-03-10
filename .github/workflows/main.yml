@@ -27,4 +27,4 @@ jobs:
         python titanic_model/train_pipeline.py
     - name: test_pipeline
       run: |
-        pytest test/test_*.py
+        pytest tests/test_*.py
