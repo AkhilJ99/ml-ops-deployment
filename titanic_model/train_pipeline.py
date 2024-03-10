@@ -25,7 +25,7 @@ def run_training() -> None:
     """
 
     # read training data
-    data = load_drug_dataset(file_name='datasets/drug200.csv')
+    data = load_drug_dataset(file_name=config.app_config.training_data_file)
     print(data.head())
 
     # split into independent variables and dependent variable

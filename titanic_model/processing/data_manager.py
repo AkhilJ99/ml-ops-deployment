@@ -153,7 +153,7 @@ def drug_pre_pipeline_preparation(*, data_frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_drug_dataset(*, file_name: str) -> pd.DataFrame:
-    dataframe = pd.read_csv(Path(file_name))
+    dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
     transformed = drug_pre_pipeline_preparation(data_frame=dataframe)
     return transformed
 
