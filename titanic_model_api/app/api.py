@@ -44,7 +44,7 @@ async def predict(input_data: schemas.MultipleDataInputs) -> Any:
     results = make_prediction(input_data=input_df.replace({np.nan: None}))
     print("prediction done")
 
-    if results["errors"] is no None:
+    if results["errors"] is not None:
         raise HTTPException(status_code=400, detail=json.loads(results["errors"]))
 
     return results
